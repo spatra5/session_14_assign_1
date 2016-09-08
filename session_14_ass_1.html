@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="AngularApp">
+<head>
+	<title>Angular Example</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+	<script>
+		var myapp = angular.module("AngularApp", []);
+		
+		myapp.directive("textDirective", function() {
+			return {
+				restrict : 'E',
+				template : '<div><input type="text" ng-model="input"/><br/><br/><p>The text in the input box is : <strong>{{input}}</strong></p></div>',
+				replace : 'true',
+				scope: {},
+				link: function(scope, elem, attrs) {
+					scope.input = attrs.inputText;
+					
+					elem.find("input").bind('keypress', function(){
+						elem.find("input").css('background-color' , 'red');
+					});
+					elem.find("input").bind('keyup', function(){
+						elem.find("input").css('background-color' , 'white');
+					});
+				}
+			};
+		});
+	</script>
+</head>
+<body>
+
+<div class="container-fluid">
+	<h2>Custom Directives with isolated scopes</h2>	
+	<!-- First custom directive -->
+	<text-directive input-text="First directive"></text-directive>
+	<!-- Second custom directive -->
+	<text-directive input-text="Second directive"></text-directive>
+</div>
+
+</body>
+</html>
+
